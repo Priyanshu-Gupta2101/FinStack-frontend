@@ -1,28 +1,155 @@
-# Frontend
+Here is the **fully updated `README.md`** with the addition of `app.routes.ts` and `app.component.ts` in the project structure under the `app/` folder.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.0.
+---
 
-## Development server
+# FinStack Task Management - Frontend
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Angular-based frontend for the FinStack Task Management System.
 
-## Code scaffolding
+---
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## 📁 Project Structure
 
-## Build
+```
+src/
+├── app/
+│   ├── components/
+│   │   ├── task-list/         # Task listing with filtering/sorting
+│   │   ├── task-form/         # Task creation/edit form
+│   │   ├── filters-modal/     # Filter modal
+│   │   └── ...                # Other presentational components
+│   ├── services/
+│   │   ├── task.service.ts    # Task API service
+│   │   ├── auth.service.ts    # Authentication service
+│   │   └── ...                # Other services
+│   ├── models/                # Type interfaces
+│   ├── guards/                # Route guards
+│   ├── interceptors/          # HTTP interceptors
+│   ├── app.routes.ts          # Application routes using Angular standalone routing
+│   ├── app.component.ts       # Root application component
+│   └── app.config.ts          # Application-wide configuration
+├── assets/                    # Static assets
+├── environments/              # Environment configurations
+└── styles/                    # Global styles
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+---
 
-## Running unit tests
+## 🛠️ Technical Stack
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+* **Framework**: Angular 17.0.0 (Standalone Components)
+* **Routing**: Standalone Angular Routing with `app.routes.ts`
+* **State Management**: Service-based (No NgRx)
+* **Styling**: Tailwind CSS 3.0.0
+* **Icons**: Lucide Angular 0.515.0
+* **Build Tool**: Angular CLI 17.0.0
+* **Hosting**: Netlify (SPA redirect support)
 
-## Running end-to-end tests
+---
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## ✨ Key Features
 
-## Further help
+* Standalone component architecture
+* Reactive forms for task creation and editing
+* JWT-based authentication flow
+* Responsive design using **Tailwind CSS**
+* Client-side filtering and sorting of tasks
+* Clean, modular routing with `app.routes.ts`
+* Deployed on **Netlify** with SPA support
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
-"# FinStack-frontend" 
+---
+
+## 🤖 Use of AI in Development
+
+This project leveraged AI assistance in the following areas:
+
+### **Angular-Specific Assistance**
+- Resolving version conflicts between Angular 17 and Tailwind CSS
+- Debugging module import errors in standalone components
+- Optimizing `app.routes.ts` configuration for lazy loading
+- Implementing proper TypeScript interfaces for API responses
+
+### **Hosting & Deployment**
+- Troubleshooting Render.com deployment issues
+- Configuring Netlify's `_redirects` for SPA routing
+- Fixing CORS configuration between frontend/backend
+- Optimizing build commands for production
+
+### **Learning & Implementation**
+- Understanding Angular's standalone component architecture
+- Implementing JWT authentication flow
+- Creating reusable service patterns
+- Debugging Tailwind CSS purge configuration
+
+### **Independent Work**
+- All Flask backend development
+- Database schema design
+- Core business logic implementation
+- Basic component templates
+- Final architectural decisions
+
+**AI Tools Used**:  
+Primarily Claude and Deepseek for specific technical queries and debugging assistance.
+
+---
+
+## 🚀 Development Setup
+
+1. **Install dependencies** (use `--force` or `--legacy-peer-deps` if needed)
+
+   ```bash
+   npm install --force
+   # or
+   npm install --legacy-peer-deps
+   ```
+
+2. **Configure environment variables**
+
+   Update the environment file at `src/environments/environment.ts`:
+
+   ```ts
+   export const environment = {
+     production: false,
+     apiUrl: 'http://localhost:5000/api', // Your backend API base URL
+   };
+   ```
+
+3. **Run the development server**
+
+   ```bash
+   ng serve
+   ```
+
+4. **Build for production**
+
+   ```bash
+   npm run build
+   ```
+
+---
+
+## 🎨 Tailwind CSS
+
+This project uses **Tailwind CSS 4.0.0** for styling. It enables:
+
+* Mobile-first, responsive layouts
+* Utility-first development
+
+Global styles and resets can be found in the `styles/` directory.
+
+---
+
+## 🌍 Deployment - Netlify
+
+The app is deployed on **Netlify** with Single Page Application (SPA) support.
+
+To ensure routing works correctly, create a `_redirects` file inside the `public/` directory with the following content:
+
+```
+/* /index.html 200
+```
+
+> Make sure to point Netlify’s deploy settings to your Angular `dist/app-name/browser` folder.
+
+---
+
