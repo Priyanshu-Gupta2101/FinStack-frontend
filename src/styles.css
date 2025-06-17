@@ -1,1 +1,41 @@
 /* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+.overflow-visible {
+  overflow: visible !important;
+}
+
+/* Custom styles */
+.loading-spinner {
+  @apply border-2 border-t-2 border-gray-200 border-t-teal-600 rounded-full w-5 h-5 animate-spin;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  @apply w-1.5;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-400 rounded-full hover:bg-gray-500;
+}
+
+/* Animation for modal */
+.modal-enter {
+  @apply opacity-0;
+}
+
+.modal-enter-active {
+  @apply opacity-100 transition-opacity duration-200;
+}
+
+.modal-exit {
+  @apply opacity-100;
+}
+
+.modal-exit-active {
+  @apply opacity-0 transition-opacity duration-200;
+}

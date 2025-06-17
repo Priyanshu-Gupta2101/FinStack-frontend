@@ -1,0 +1,226 @@
+<div class="p-6">
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-xl font-semibold">Task Management</h2>
+    <div class="flex space-x-4">
+      <button
+        (click)="showFiltersModal = true"
+        class="flex items-center px-3 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50"
+      >
+        <i-lucide name="funnel" class="w-4 h-4 mr-2"></i-lucide>
+        Filters
+      </button>
+      <button
+        (click)="openNewTaskModal()"
+        class="flex items-center px-3 py-2 bg-teal-700 text-white rounded text-sm hover:bg-teal-800"
+      >
+        <i-lucide name="plus" class="w-4 h-4 mr-2"></i-lucide>
+        New Task
+      </button>
+    </div>
+  </div>
+
+  <!-- Active Filters -->
+  <div
+    *ngIf="objectKeys(activeFilters).length > 0"
+    class="mb-4 flex flex-wrap gap-2"
+  >
+    <div
+      *ngFor="let filter of objectKeys(activeFilters)"
+      class="flex items-center bg-gray-100 rounded-full px-3 py-1 text-sm"
+    >
+      <span class="font-medium mr-1">{{ filter }}:</span>
+      <span>
+        {{
+          filter === "From" || filter === "To"
+            ? (activeFilters[filter] | date : "mediumDate")
+            : activeFilters[filter]
+        }}
+      </span>
+      <button
+        (click)="clearFilter(filter)"
+        class="ml-2 text-gray-500 hover:text-gray-700"
+      >
+        <i-lucide name="x" class="w-3 h-3"></i-lucide>
+      </button>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-lg shadow overflow-hidden">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+        <tr>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+          >
+            Date
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+          >
+            Entity Name
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+          >
+            Task Type
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+          >
+            Time
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+          >
+            Contact Person
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+          >
+            Notes
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+          >
+            Status
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+          >
+            Actions
+          </th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <tr *ngIf="isLoading && tasks.length === 0">
+          <td colspan="8" class="px-6 py-4 text-center">
+            <div class="loading-spinner mx-auto"></div>
+          </td>
+        </tr>
+        <tr *ngIf="!isLoading && tasks.length === 0">
+          <td colspan="8" class="px-6 py-4 text-center text-gray-500">
+            No tasks found
+          </td>
+        </tr>
+        <tr
+          *ngFor="let task of tasks"
+          class="hover:bg-gray-50 overflow-visible"
+        >
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+            {{ task.date_created | date : "dd/MM/yyyy" }}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            <span
+              [class.text-blue-600]="
+                task.entity_name.includes('Private Limited')
+              "
+            >
+              {{ task.entity_name }}
+            </span>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            <div class="flex items-center">
+              <i-lucide
+                [name]="task.task_type === 'Call' ? 'phone' : 'map-pin'"
+                class="w-4 h-4 mr-2"
+              ></i-lucide>
+              {{ task.task_type }}
+            </div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+            {{ task.task_time | date : "shortTime" }}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+            {{ task.contact_person?.full_name || "Unassigned" }}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            <div *ngIf="!task.note" class="flex items-center text-gray-500">
+              <i-lucide name="message-circle" class="w-4 h-4 mr-2"></i-lucide>
+              Add Note
+            </div>
+            <span *ngIf="task.note" class="text-gray-600">
+              {{ task.note | truncate : 30 }}
+            </span>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            <div class="relative inline-block">
+              <button
+                (click)="toggleStatusDropdown(task.id)"
+                [ngClass]="getStatusClasses(task.status)"
+                class="focus:outline-none cursor-pointer status-dropdown-trigger"
+              >
+                {{ task.status | titlecase }}
+              </button>
+
+              <!-- Status Dropdown Menu -->
+              <div
+                *ngIf="showStatusChangeModal === task.id"
+                class="absolute p-3 left-0 mt-1 bg-white border border-gray-200 rounded shadow-lg z-50 w-40 status-dropdown-menu flex gap-2 justify-between"
+              >
+                <button
+                  (click)="
+                    updateTaskStatus(task.id, 'open');
+                    showStatusChangeModal = null
+                  "
+                  [class.bg-orange-500]="task.status === 'open'"
+                  [class.text-white]="task.status === 'open'"
+                  class="text-left px-3 py-2 text-sm hover:bg-orange-100 cursor-pointer rounded-md"
+                >
+                  Open
+                </button>
+                <button
+                  (click)="
+                    updateTaskStatus(task.id, 'closed');
+                    showStatusChangeModal = null
+                  "
+                  [class.bg-blue-500]="task.status === 'closed'"
+                  [class.text-white]="task.status === 'closed'"
+                  class="text-left px-3 py-2 text-sm hover:bg-blue-100 cursor-pointer rounded-md"
+                >
+                  Closed
+                </button>
+              </div>
+            </div>
+          </td>
+
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            <button
+              (click)="openTaskActionsModal(task)"
+              class="text-gray-400 hover:text-gray-600"
+            >
+              <i-lucide name="chevron-down" class="w-5 h-5"></i-lucide>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modals -->
+  <app-task-form
+    *ngIf="showTaskFormModal"
+    [users]="users"
+    [task]="selectedTask"
+    (formSubmitted)="onTaskFormSubmit($event)"
+    (formCanceled)="showTaskFormModal = false"
+  ></app-task-form>
+
+  <app-filters-modal
+    *ngIf="showFiltersModal"
+    [currentFilters]="filters"
+    (applyFilters)="onFiltersApply($event)"
+    (closeModal)="showFiltersModal = false"
+  ></app-filters-modal>
+
+  <app-task-actions-modal
+    *ngIf="showTaskActionsModal && selectedTask"
+    [task]="selectedTask"
+    (edit)="showTaskActionsModal = false; showTaskFormModal = true"
+    (duplicate)="duplicateTask(selectedTask)"
+    (changeStatus)="
+      updateTaskStatus(selectedTask.id, $event); showTaskActionsModal = false
+    "
+    (delete)="deleteTask(selectedTask.id)"
+    (close)="showTaskActionsModal = false"
+  ></app-task-actions-modal>
+</div>

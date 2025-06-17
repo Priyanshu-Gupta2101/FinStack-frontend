@@ -1,0 +1,164 @@
+<div
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+>
+  <div class="bg-white rounded-lg w-full max-w-md p-6">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-lg font-semibold">
+        {{ task ? "EDIT TASK" : "NEW TASK" }}
+      </h3>
+      <button (click)="onCancel()" class="text-gray-500 hover:text-gray-700">
+        <i-lucide name="x" class="w-5 h-5"></i-lucide>
+      </button>
+    </div>
+
+    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="space-y-4">
+      <!-- Entity Name -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1"
+          >Entity Name*</label
+        >
+        <input
+          formControlName="entity_name"
+          type="text"
+          class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-teal-500 focus:border-teal-500"
+          placeholder="Company or entity name"
+        />
+        <div
+          *ngIf="formErrors['entity_name']"
+          class="text-red-500 text-xs mt-1"
+        >
+          {{ formErrors["entity_name"] }}
+        </div>
+      </div>
+
+      <!-- Task Type -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1"
+          >Task Type*</label
+        >
+        <select
+          formControlName="task_type"
+          class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-teal-500 focus:border-teal-500"
+        >
+          <option value="Call">Call</option>
+          <option value="Meeting">Meeting</option>
+          <option value="Video Call">Video Call</option>
+        </select>
+      </div>
+
+      <!-- Task Time -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1"
+          >Task Time*</label
+        >
+        <input
+          formControlName="task_time"
+          type="datetime-local"
+          class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-teal-500 focus:border-teal-500"
+        />
+        <div *ngIf="formErrors['task_time']" class="text-red-500 text-xs mt-1">
+          {{ formErrors["task_time"] }}
+        </div>
+      </div>
+
+      <!-- Contact Person -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1"
+          >Contact Person*</label
+        >
+        <select
+          formControlName="contact_person_id"
+          class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-teal-500 focus:border-teal-500"
+        >
+          <option value="">Select a team member</option>
+          <option *ngFor="let user of users" [value]="user.id">
+            {{ user.full_name }} ({{ user.email }})
+          </option>
+        </select>
+        <div
+          *ngIf="formErrors['contact_person_id']"
+          class="text-red-500 text-xs mt-1"
+        >
+          {{ formErrors["contact_person_id"] }}
+        </div>
+        <div *ngIf="users.length === 0" class="text-yellow-600 text-xs mt-1">
+          No team members available. Please contact admin.
+        </div>
+      </div>
+
+      <!-- Status -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1"
+          >Status</label
+        >
+        <div class="flex space-x-1">
+          <button
+            type="button"
+            (click)="taskForm.patchValue({ status: 'open' })"
+            [class.bg-orange-500]="taskForm.value.status === 'open'"
+            [class.text-white]="taskForm.value.status === 'open'"
+            [class.bg-gray-200]="taskForm.value.status !== 'open'"
+            [class.text-gray-700]="taskForm.value.status !== 'open'"
+            class="px-4 py-2 rounded text-sm flex-1"
+          >
+            Open
+          </button>
+          <button
+            type="button"
+            (click)="taskForm.patchValue({ status: 'closed' })"
+            [class.bg-blue-500]="taskForm.value.status === 'closed'"
+            [class.text-white]="taskForm.value.status === 'closed'"
+            [class.bg-gray-200]="taskForm.value.status !== 'closed'"
+            [class.text-gray-700]="taskForm.value.status !== 'closed'"
+            class="px-4 py-2 rounded text-sm flex-1"
+          >
+            Closed
+          </button>
+        </div>
+      </div>
+
+      <!-- Note -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1"
+          >Note (Optional)</label
+        >
+        <textarea
+          formControlName="note"
+          rows="3"
+          class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-teal-500 focus:border-teal-500"
+          placeholder="Additional notes about the task"
+        ></textarea>
+      </div>
+
+      <!-- Error Message -->
+      <div
+        *ngIf="errorMessage"
+        class="p-3 bg-red-100 text-red-700 rounded text-sm"
+      >
+        {{ errorMessage }}
+      </div>
+
+      <!-- Form Actions -->
+      <div class="flex justify-end space-x-3 pt-4">
+        <button
+          type="button"
+          (click)="onCancel()"
+          class="px-4 py-2 text-gray-600 hover:text-gray-800"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          [disabled]="taskForm.invalid || isLoading"
+          class="px-6 py-2 bg-teal-700 text-white rounded hover:bg-teal-800 disabled:bg-teal-400 disabled:cursor-not-allowed"
+        >
+          <span *ngIf="!isLoading">{{ task ? "Update" : "Create" }} Task</span>
+          <span *ngIf="isLoading" class="flex items-center">
+            <span class="loading-spinner mr-2"></span>
+            Processing...
+          </span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

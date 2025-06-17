@@ -1,0 +1,39 @@
+<div
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+>
+  <div class="bg-white rounded-lg w-64 p-4">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-lg font-medium">Task Actions</h3>
+      <button (click)="close.emit()" class="text-gray-500 hover:text-gray-700">
+        <i-lucide name="x" class="w-5 h-5"></i-lucide>
+      </button>
+    </div>
+
+    <div class="space-y-2">
+      <button
+        (click)="onEdit()"
+        class="w-full text-left px-3 py-2 hover:bg-gray-100 rounded text-sm"
+      >
+        Edit
+      </button>
+      <button
+        (click)="onDuplicate()"
+        class="w-full text-left px-3 py-2 hover:bg-gray-100 rounded text-sm"
+      >
+        Duplicate
+      </button>
+      <button
+        (click)="toggleStatus()"
+        class="w-full text-left px-3 py-2 hover:bg-gray-100 rounded text-sm"
+      >
+        Mark as {{ task.status === "open" ? "Closed" : "Open" }}
+      </button>
+      <button
+        (click)="onDelete()"
+        class="w-full text-left px-3 py-2 text-red-600 hover:bg-red-50 rounded text-sm"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
