@@ -1,28 +1,68 @@
-# Frontend
+# FinStack Task Management - Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.0.
+Angular-based frontend for the FinStack Task Management System
 
-## Development server
+## Project Structure
+src/
+├── app/
+│ ├── components/
+│ │ ├── task-list/ # Task listing with filtering/sorting
+│ │ ├── task-form/ # Task creation/edit form
+│ │ ├── status-toggle/ # Status change component
+│ │ └── ... # Other presentational components
+│ ├── services/
+│ │ ├── task.service.ts # Task API service
+│ │ ├── auth.service.ts # Authentication service
+│ │ └── ... # Other services
+│ ├── models/ # Type interfaces
+│ ├── guards/ # Route guards
+│ ├── interceptors/ # HTTP interceptors
+│ └── app.config.ts # Application configuration
+├── assets/ # Static assets
+├── environments/ # Environment configurations
+└── styles/ # Global styles
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+text
 
-## Code scaffolding
+## Technical Stack
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Angular**: 17.0.0 (Standalone Components)
+- **State Management**: Service-based (No NgRx)
+- **Styling**: Tailwind CSS 3.0.0
+- **Icons**: Lucide Angular 0.515.0
+- **Build System**: Angular CLI 17.0.0
 
-## Build
+## Key Features
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- Standalone components architecture
+- Reactive forms for task management
+- JWT authentication flow
+- Responsive design with Tailwind
+- Client-side filtering/sorting
 
-## Running unit tests
+## Development Setup
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+1. Install dependencies:
+   ```bash
+   npm install
+Configure environment:
 
-## Running end-to-end tests
+bash
+cp .env.example .env
+Run development server:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+bash
+npm start
+Build for production:
 
-## Further help
+bash
+npm run build
+Environment Variables
+ini
+API_URL=http://localhost:5000/api  # Your backend API URL
+Deployment
+Hosted on Netlify with SPA redirects:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
-"# FinStack-frontend" 
+text
+/_redirects
+/* /index.html 20
