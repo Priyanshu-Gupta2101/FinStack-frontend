@@ -9,22 +9,22 @@
       </button>
     </div>
 
-    <div class="space-y-2">
+    <div>
       <button
         (click)="onEdit()"
-        class="w-full text-left px-3 py-2 hover:bg-gray-100 rounded text-sm"
+        class="w-full text-left px-3 py-2 hover:bg-gray-100 rounded text-sm mb-2"
       >
         Edit
       </button>
       <button
         (click)="onDuplicate()"
-        class="w-full text-left px-3 py-2 hover:bg-gray-100 rounded text-sm"
+        class="w-full text-left px-3 py-2 hover:bg-gray-100 rounded text-sm mb-2"
       >
         Duplicate
       </button>
       <button
         (click)="toggleStatus()"
-        class="w-full text-left px-3 py-2 hover:bg-gray-100 rounded text-sm"
+        class="w-full text-left px-3 py-2 hover:bg-gray-100 rounded text-sm mb-2"
       >
         Mark as {{ task.status === "open" ? "Closed" : "Open" }}
       </button>

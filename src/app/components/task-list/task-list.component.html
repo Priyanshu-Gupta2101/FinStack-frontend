@@ -1,7 +1,7 @@
 <div class="p-6">
   <div class="flex justify-between items-center mb-6">
     <h2 class="text-xl font-semibold">Task Management</h2>
-    <div class="flex space-x-4">
+    <div class="flex">
       <button
         (click)="showFiltersModal = true"
         class="flex items-center px-3 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50"
@@ -11,7 +11,7 @@
       </button>
       <button
         (click)="openNewTaskModal()"
-        class="flex items-center px-3 py-2 bg-teal-700 text-white rounded text-sm hover:bg-teal-800"
+        class="ml-4 flex items-center px-3 py-2 bg-teal-700 text-white rounded text-sm hover:bg-teal-800"
       >
         <i-lucide name="plus" class="w-4 h-4 mr-2"></i-lucide>
         New Task

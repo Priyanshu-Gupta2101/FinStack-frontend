@@ -1,8 +1,8 @@
 <div
   class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8"
 >
-  <div class="max-w-md w-full space-y-8">
-    <div class="text-center">
+  <div class="max-w-md w-full">
+    <div class="text-center mb-8">
       <div class="flex justify-center mb-6">
         <div
           class="w-12 h-12 bg-teal-700 rounded-full flex items-center justify-center"
@@ -18,13 +18,9 @@
       <p class="mt-2 text-sm text-gray-600">Join Private Circle today</p>
     </div>
 
-    <form
-      class="mt-8 space-y-6"
-      [formGroup]="registerForm"
-      (ngSubmit)="onSubmit()"
-    >
-      <div class="space-y-4">
-        <div>
+    <form class="mt-8" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div>
+        <div class="mb-4">
           <label
             for="full_name"
             class="block text-sm font-semibold text-gray-700 mb-2"
@@ -41,7 +37,7 @@
             placeholder="Enter your full name"
           />
         </div>
-        <div>
+        <div class="mb-4">
           <label
             for="username"
             class="block text-sm font-semibold text-gray-700 mb-2"
@@ -58,7 +54,7 @@
             placeholder="Choose a username"
           />
         </div>
-        <div>
+        <div class="mb-4">
           <label
             for="email"
             class="block text-sm font-semibold text-gray-700 mb-2"
@@ -75,7 +71,7 @@
             placeholder="Enter your email"
           />
         </div>
-        <div>
+        <div class="mb-6">
           <label
             for="password"
             class="block text-sm font-semibold text-gray-700 mb-2"
@@ -96,7 +92,7 @@
 
       <div
         *ngIf="errorMessage"
-        class="text-red-600 text-sm font-medium bg-red-50 border border-red-200 rounded-md p-3"
+        class="text-red-600 text-sm font-medium bg-red-50 border border-red-200 rounded-md p-3 mb-6"
       >
         {{ errorMessage }}
       </div>

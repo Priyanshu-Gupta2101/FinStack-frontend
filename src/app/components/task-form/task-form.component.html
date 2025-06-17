@@ -11,9 +11,8 @@
       </button>
     </div>
 
-    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="space-y-4">
-      <!-- Entity Name -->
-      <div>
+    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+      <div class="mt-0">
         <label class="block text-sm font-medium text-gray-700 mb-1"
           >Entity Name*</label
         >
@@ -31,8 +30,7 @@
         </div>
       </div>
 
-      <!-- Task Type -->
-      <div>
+      <div class="mt-4">
         <label class="block text-sm font-medium text-gray-700 mb-1"
           >Task Type*</label
         >
@@ -46,8 +44,7 @@
         </select>
       </div>
 
-      <!-- Task Time -->
-      <div>
+      <div class="mt-4">
         <label class="block text-sm font-medium text-gray-700 mb-1"
           >Task Time*</label
         >
@@ -61,8 +58,7 @@
         </div>
       </div>
 
-      <!-- Contact Person -->
-      <div>
+      <div class="mt-4">
         <label class="block text-sm font-medium text-gray-700 mb-1"
           >Contact Person*</label
         >
@@ -86,12 +82,11 @@
         </div>
       </div>
 
-      <!-- Status -->
-      <div>
+      <div class="mt-4">
         <label class="block text-sm font-medium text-gray-700 mb-1"
           >Status</label
         >
-        <div class="flex space-x-1">
+        <div class="flex">
           <button
             type="button"
             (click)="taskForm.patchValue({ status: 'open' })"
@@ -110,15 +105,14 @@
             [class.text-white]="taskForm.value.status === 'closed'"
             [class.bg-gray-200]="taskForm.value.status !== 'closed'"
             [class.text-gray-700]="taskForm.value.status !== 'closed'"
-            class="px-4 py-2 rounded text-sm flex-1"
+            class="ml-1 px-4 py-2 rounded text-sm flex-1"
           >
             Closed
           </button>
         </div>
       </div>
 
-      <!-- Note -->
-      <div>
+      <div class="mt-4">
         <label class="block text-sm font-medium text-gray-700 mb-1"
           >Note (Optional)</label
         >
@@ -130,16 +124,14 @@
         ></textarea>
       </div>
 
-      <!-- Error Message -->
       <div
         *ngIf="errorMessage"
-        class="p-3 bg-red-100 text-red-700 rounded text-sm"
+        class="mt-4 p-3 bg-red-100 text-red-700 rounded text-sm"
       >
         {{ errorMessage }}
       </div>
 
-      <!-- Form Actions -->
-      <div class="flex justify-end space-x-3 pt-4">
+      <div class="flex justify-end pt-4 mt-4">
         <button
           type="button"
           (click)="onCancel()"
@@ -150,7 +142,7 @@
         <button
           type="submit"
           [disabled]="taskForm.invalid || isLoading"
-          class="px-6 py-2 bg-teal-700 text-white rounded hover:bg-teal-800 disabled:bg-teal-400 disabled:cursor-not-allowed"
+          class="ml-3 px-6 py-2 bg-teal-700 text-white rounded hover:bg-teal-800 disabled:bg-teal-400 disabled:cursor-not-allowed"
         >
           <span *ngIf="!isLoading">{{ task ? "Update" : "Create" }} Task</span>
           <span *ngIf="isLoading" class="flex items-center">
