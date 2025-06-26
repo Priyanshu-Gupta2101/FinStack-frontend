@@ -1,10 +1,26 @@
-Here is the **fully updated `README.md`** with the addition of `app.routes.ts` and `app.component.ts` in the project structure under the `app/` folder.
-
 ---
 
 # FinStack Task Management - Frontend
 
 Angular-based frontend for the FinStack Task Management System.
+
+---
+
+## 🌐 Application Routes
+
+### **Authentication Routes**
+- `/login` - User login page
+- `/register` - User registration page
+
+### **Task Management Routes**
+- `/tasks` - Main task dashboard (protected route)
+  - Displays all tasks with filtering/sorting capabilities
+  - Requires authenticated access
+
+### **Navigation Behavior**
+- Root path (`/`) automatically redirects to `/tasks`
+- All undefined routes (`**`) redirect to `/tasks`
+- Task routes are protected with authentication guard
 
 ---
 
